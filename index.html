@@ -23,13 +23,30 @@
     max-width:1020px;
     box-shadow:0 30px 80px rgba(0,0,0,0.7);
     line-height:0;
+    overflow:hidden;
   }
   .stage > img{
     display:block;
+    position:absolute;
+    top:0; left:0;
     width:100%;
-    height:auto;
     pointer-events:none;
     user-select:none;
+  }
+  .extra-panel{
+    position:absolute;
+    left:0; width:100%;
+    background:#f2eef8;
+  }
+  .extra-panel .extra-row-bg{
+    position:absolute; left:0; width:100%;
+    border-top:1px solid rgba(60,20,80,0.12);
+  }
+  .extra-panel .extra-row-bg:nth-child(even){ background:rgba(90,40,120,0.05); }
+  .extra-panel .extra-name-strip{
+    position:absolute; top:0; bottom:0; left:0;
+    background:linear-gradient(90deg, #2a1338, #1a0d24);
+    border-left:2px solid #a852c9;
   }
 
   .field{
@@ -197,6 +214,119 @@
     padding:8px 14px;
     font-size:11.5px;
   }
+
+  /* ================= Tournament Points Tracker ================= */
+  .trk-panel{
+    max-width:1020px;
+    width:100%;
+    margin: 22px auto 0;
+    background: rgba(255,255,255,0.02);
+    border:1px solid #241a30;
+    padding:20px 22px 24px;
+    font-family:'Cairo', sans-serif;
+    color:#f0e6f5;
+  }
+  .trk-panel h2{
+    font-size:15px;
+    font-weight:800;
+    color:#fff;
+    margin:0 0 4px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .trk-panel h2 .trk-tag{
+    font-family:'Rajdhani', sans-serif;
+    font-size:11px;
+    letter-spacing:2px;
+    color:#c98cf0;
+    border:1px solid #4a2f5a;
+    padding:2px 8px;
+    text-transform:uppercase;
+  }
+  .trk-desc{
+    color:#a08fb0;
+    font-size:12px;
+    margin:0 0 16px;
+    line-height:1.7;
+  }
+
+  .trk-points-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(78px,1fr)); gap:8px; }
+  .trk-point-cell{ background:#0e0a13; border:1px solid #241a30; padding:8px; text-align:center; }
+  .trk-point-cell label{ display:block; font-family:'Rajdhani',sans-serif; font-size:11px; color:#a08fb0; letter-spacing:1px; margin-bottom:4px; }
+  .trk-point-cell input{ width:100%; background:transparent; border:none; outline:none; color:#fff; font-family:'Rajdhani',sans-serif; font-weight:700; font-size:18px; text-align:center; }
+  .trk-point-cell:focus-within{ border-color:#a852c9; background:rgba(168,82,201,0.1); }
+
+  .trk-table{ width:100%; border-collapse:collapse; }
+  .trk-table th, .trk-table td{ padding:8px 8px; text-align:center; font-size:13px; border-bottom:1px solid #201530; }
+  .trk-table th{ font-family:'Rajdhani',sans-serif; letter-spacing:1px; font-size:11.5px; color:#a08fb0; text-transform:uppercase; font-weight:700; }
+  .trk-table td.trk-name-cell{ text-align:right; font-weight:700; color:#fff; }
+  .trk-table select, .trk-table input[type="number"]{
+    background:#0e0a13; border:1px solid #3a2c40; color:#fff;
+    font-family:'Rajdhani',sans-serif; font-weight:700; font-size:14px;
+    padding:6px 4px; width:88px; text-align:center; outline:none;
+  }
+  .trk-table select:focus, .trk-table input:focus{ border-color:#a852c9; }
+  .trk-table input.trk-name-input{
+    background:#0e0a13; border:1px solid #3a2c40; color:#fff;
+    font-family:'Cairo',sans-serif; font-weight:700; font-size:13.5px;
+    padding:7px 10px; width:100%; min-width:120px; text-align:right; outline:none;
+  }
+  .trk-table input.trk-name-input:focus{ border-color:#a852c9; }
+  .trk-table td[rowspan]{ vertical-align:middle; background:rgba(255,255,255,0.015); }
+
+  .trk-round-actions{ display:flex; justify-content:space-between; align-items:center; margin-top:14px; flex-wrap:wrap; gap:10px; }
+  .trk-round-label{ font-family:'Rajdhani', sans-serif; color:#c98cf0; letter-spacing:2px; font-weight:700; font-size:13px; }
+  .trk-form-err{ color:#ff8a8a; font-size:12.5px; margin-top:10px; display:none; border-right:2px solid #d9435a; padding-right:8px; }
+  .trk-form-err.show{ display:block; }
+
+  .trk-standings-table td.trk-rank-cell{ font-family:'Rajdhani',sans-serif; font-weight:700; font-size:16px; color:#fff; }
+  .trk-standings-table td.trk-pts-cell{ font-family:'Rajdhani',sans-serif; font-weight:700; color:#c98cf0; font-size:16px; }
+  .trk-standings-table tr.trk-rank-1 td.trk-rank-cell{ color:#ffd24a; text-shadow:0 0 10px rgba(255,210,74,0.6); }
+  .trk-standings-table tr.trk-rank-2 td.trk-rank-cell{ color:#d9d9e0; }
+  .trk-standings-table tr.trk-rank-3 td.trk-rank-cell{ color:#e0a45f; }
+
+  .trk-stat-cards{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .trk-stat-card{ background:#0e0a13; border:1px solid #241a30; padding:14px; }
+  .trk-stat-card .trk-lbl{ font-family:'Rajdhani',sans-serif; letter-spacing:1.5px; font-size:11px; color:#a08fb0; text-transform:uppercase; margin-bottom:6px; }
+  .trk-stat-card .trk-val{ font-weight:800; font-size:16px; color:#fff; }
+  .trk-stat-card .trk-sub{ color:#6b5a76; font-size:11.5px; margin-top:3px; }
+
+  .trk-log-scroll{ max-height:420px; overflow-y:auto; padding-left:6px; }
+  .trk-log-scroll::-webkit-scrollbar{ width:8px; }
+  .trk-log-scroll::-webkit-scrollbar-thumb{ background:#3a2c40; }
+  .trk-log-scroll::-webkit-scrollbar-track{ background:#0e0a13; }
+
+  .field.trk-auto-field{ cursor:default; }
+  .field.trk-auto-field:focus{
+    background:rgba(168,82,201,0.08);
+    box-shadow: 0 0 0 1px rgba(168,82,201,0.3);
+  }
+
+  .trk-round-card{
+    border:1px solid #241a30;
+    background:rgba(255,255,255,0.015);
+    margin-bottom:12px;
+  }
+  .trk-round-card-head{
+    display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+    background:#150d1c; padding:9px 12px;
+  }
+  .trk-round-card-title{
+    font-family:'Rajdhani',sans-serif; font-weight:700; letter-spacing:1px; font-size:13px;
+    color:#c98cf0;
+  }
+  .trk-round-card-winner{
+    font-family:'Cairo',sans-serif; font-weight:700; font-size:12.5px; color:#ffd24a;
+  }
+  .trk-round-card-actions{
+    margin-inline-start:auto;
+    display:flex; gap:6px;
+  }
+  .trk-round-card table{ width:100%; }
+  .trk-round-card table th, .trk-round-card table td{
+    padding:6px 8px; font-size:12.5px; text-align:center; border-bottom:1px solid #1a1120;
+  }
+  .trk-round-card table th{ color:#8c7699; font-family:'Rajdhani',sans-serif; font-size:10.5px; letter-spacing:1px; }
+  .trk-round-card table td.trk-name-cell{ text-align:right; color:#fff; font-weight:700; }
 </style>
 </head>
 <body>
@@ -207,26 +337,113 @@
   </div>
 
   <div class="toolbar">
-    <button class="btn" onclick="openImport()">📋 استيراد أسماء الفرق</button>
     <button class="btn" onclick="downloadImage()">⬇ تحميل الصورة</button>
-    <button class="btn secondary" onclick="clearAll()">تفريغ الجدول</button>
+    <button class="btn secondary" onclick="openImport()">📋 استيراد أسماء الفرق</button>
+    <button class="btn secondary" onclick="resetEverything()">🗑 تصفير كل شيء</button>
   </div>
 
-  <div class="style-panel">
-    <div class="style-group">
-      <label>حجم خط أسماء الفرق</label>
-      <input type="range" id="nameSizeRange" min="60" max="170" value="100">
-      <input type="color" id="nameColorPick" value="#ffffff">
-    </div>
-    <div class="style-group">
-      <label>حجم خط الأرقام</label>
-      <input type="range" id="statSizeRange" min="60" max="170" value="100">
-      <input type="color" id="statColorPick" value="#141414">
-    </div>
-    <button class="btn secondary small" onclick="resetStyles()">استعادة الافتراضي</button>
+  <p class="hint">كل الخانات (اسم الفريق / MP / WIN / POS / KILLS / TOTAL) تتعبّى تلقائيًا من الترتيب تحت — عدّل الفرق والنقاط والجولات من هناك بدل ما تكتب بالصورة مباشرة. لما تخلص، اضغط "تحميل الصورة" عشان تنزّلها جاهزة بصيغة PNG.</p>
+
+  <!-- ================= Tournament Points Tracker ================= -->
+  <div class="trk-panel">
+    <h2>جدول نقاط المراكز <span class="trk-tag">Placement Points</span></h2>
+    <p class="trk-desc">عدّل نقطة أي مركز من 1 إلى 12، والتعديل يطبّق تلقائيًا على كل الجولات المحفوظة والترتيب العام فورًا.</p>
+    <div class="trk-points-grid" id="trkPointsGrid"></div>
   </div>
 
-  <p class="hint">اضغط داخل أي خانة اسم فريق أو رقم (MP / WIN / POS / KILLS / TOTAL) وعدّلها مباشرة. لما تخلص، اضغط "تحميل الصورة" عشان تنزّلها جاهزة بصيغة PNG.</p>
+  <div class="trk-panel">
+    <h2>عدد الفرق <span class="trk-tag" id="trkTeamCountTag">12 فريق</span></h2>
+    <p class="trk-desc">تقدر تزيد فرق فوق الـ12 الأصليين — الصورة تتوسع تلقائيًا وتضيف صف جديد بنفس ترتيب أعمدة الصورة الأصلية (اسم الفريق / MP / WIN / POS / KILLS / TOTAL) لكل فريق تزيده.</p>
+    <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+      <input type="number" id="trkAddTeamsInput" min="1" max="24" value="1" style="width:80px; background:#0e0a13; border:1px solid #3a2c40; color:#fff; font-family:'Rajdhani',sans-serif; font-weight:700; font-size:15px; padding:8px; text-align:center; outline:none;">
+      <button class="btn" onclick="trkAddTeams(document.getElementById('trkAddTeamsInput').value)">➕ إضافة فرق</button>
+      <button class="btn secondary" onclick="trkRemoveLastTeam()">➖ حذف آخر فريق مُضاف</button>
+    </div>
+  </div>
+
+  <div class="trk-panel">
+    <h2>إدخال بيانات الجولة الحالية <span class="trk-tag">Round Entry</span></h2>
+    <p class="trk-desc">اسم كل فريق قابل للتعديل مباشرة بنفس الجدول. حدد المركز والكيلات لكل فريق — أي مركز تختاره ينشطب تلقائيًا من باقي القوائم حتى ما تقدر تعطيه لفريق ثاني بالغلط. اترك المركز فارغ لأي فريق ما شارك.</p>
+    <div style="overflow-x:auto;">
+      <table class="trk-table" id="trkRoundEntryTable">
+        <thead><tr><th style="text-align:right;">اسم الفريق</th><th>المركز</th><th>الكيلات</th><th>نقاط المركز</th><th>مجموع الجولة</th></tr></thead>
+        <tbody id="trkRoundEntryBody"></tbody>
+      </table>
+    </div>
+    <div class="trk-form-err" id="trkRoundErr"></div>
+    <div class="trk-round-actions">
+      <div class="trk-round-label" id="trkRoundModeLabel">الجولة رقم <span id="trkNextRoundNum" class="num">1</span></div>
+      <div style="display:flex; gap:8px;">
+        <button class="btn secondary" onclick="trkClearCurrentRound()">تفريغ الجولة الحالية</button>
+        <button class="btn secondary" onclick="trkCancelEditRound()" id="trkCancelEditBtn" style="display:none;">إلغاء التعديل</button>
+        <button class="btn" onclick="trkSaveRound()" id="trkSaveRoundBtn">✅ احتساب وإضافة الجولة</button>
+      </div>
+    </div>
+    <p class="trk-desc" id="trkRoundEntryAnchor" style="margin:6px 0 0; font-size:11px;"></p>
+  </div>
+
+  <div class="trk-panel">
+    <h2>الترتيب العام التراكمي <span class="trk-tag" id="trkRoundsCountTag">عدد الجولات: 0</span></h2>
+    <p class="trk-desc">عند تعادل مجموع النقاط بين فريقين أو أكثر: يتصدر الأكثر تحقيقًا لعدد WWCD، فإذا استمر التعادل يُحتكم لعدد الكيلات الكلي، ثم لنقاط المراكز فقط (بدون كيلات).<br>هذا الترتيب يعبّي تلقائيًا خانات صورة النتائج فوق (اسم الفريق / MP / WIN / POS / KILLS / TOTAL) — ما تحتاج تكتب شي فيها يدوي.</p>
+    <div style="overflow-x:auto;">
+      <table class="trk-table trk-standings-table" id="trkStandingsTable">
+        <thead><tr><th>#</th><th style="text-align:right;">الفريق</th><th>نقاط المراكز</th><th>الكيلات</th><th>المجموع</th><th>WWCD</th><th>متوسط المركز</th></tr></thead>
+        <tbody id="trkStandingsBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="trk-panel">
+    <h2>تحليل سريع <span class="trk-tag">Quick Stats</span></h2>
+    <div class="trk-stat-cards">
+      <div class="trk-stat-card">
+        <div class="trk-lbl">أعلى كيلات</div>
+        <div class="trk-val" id="trkStatTopFragger">—</div>
+        <div class="trk-sub" id="trkStatTopFraggerSub"></div>
+      </div>
+      <div class="trk-stat-card">
+        <div class="trk-lbl">أفضل متوسط مركز</div>
+        <div class="trk-val" id="trkStatBestAvg">—</div>
+        <div class="trk-sub" id="trkStatBestAvgSub"></div>
+      </div>
+      <div class="trk-stat-card">
+        <div class="trk-lbl">أكثر WWCD</div>
+        <div class="trk-val" id="trkStatMostWwcd">—</div>
+        <div class="trk-sub" id="trkStatMostWwcdSub"></div>
+      </div>
+      <div class="trk-stat-card">
+        <div class="trk-lbl">المتصدر الحالي</div>
+        <div class="trk-val" id="trkStatLeader">—</div>
+        <div class="trk-sub" id="trkStatLeaderSub"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="trk-panel">
+    <h2>سجل الجولات <span class="trk-tag" id="trkLogCountTag">0 جولة</span></h2>
+    <p class="trk-desc">كل جولة سابقة بكرت خاص فيها — تقدر تعدّل أي جولة (تضيف أو تنقص نقاط/كيلات لأي فريق فيها) أو تحذفها بالكامل بأي وقت، والترتيب العام يتحدث تلقائيًا حسب التعديل.</p>
+    <div class="trk-log-scroll" id="trkLogScroll">
+      <div id="trkLogBody"><div class="trk-empty" style="color:#6b5a76; padding:12px;">ما فيه جولات محفوظة بعد.</div></div>
+    </div>
+  </div>
+
+  <div class="trk-panel">
+    <h2>خيارات تنسيق الصورة <span class="trk-tag">Image Style</span></h2>
+    <div class="style-panel" style="margin:0;">
+      <div class="style-group">
+        <label>حجم خط أسماء الفرق</label>
+        <input type="range" id="nameSizeRange" min="60" max="170" value="100">
+        <input type="color" id="nameColorPick" value="#ffffff">
+      </div>
+      <div class="style-group">
+        <label>حجم خط الأرقام</label>
+        <input type="range" id="statSizeRange" min="60" max="170" value="100">
+        <input type="color" id="statColorPick" value="#141414">
+      </div>
+      <button class="btn secondary small" onclick="resetStyles()">استعادة الافتراضي</button>
+    </div>
+  </div>
+  <!-- ================= /Tournament Points Tracker ================= -->
 
   <!-- Import modal -->
   <div class="modal-backdrop" id="importBackdrop">
@@ -248,10 +465,14 @@
 
 <script>
   const stage = document.getElementById('stage');
-  const NATURAL_W = 1020, NATURAL_H = 758;
-  const ROWS = 12;
+  const NATURAL_W = 1020, BASE_H = 758; // BASE_H = height of the fixed artwork itself
+  const ROWS_BASE = 12;
+  let extraTeamCount = 0; // teams added beyond the original 12
 
-  // row geometry (percent of 1020x758), derived from the source artwork
+  function totalTeams(){ return ROWS_BASE + extraTeamCount; }
+  function totalHeightPx(){ return BASE_H + extraTeamCount*rowStepPx; }
+
+  // row geometry (pixels, derived from the source artwork at 1020x758)
   const rowTopPx = 119;
   const rowStepPx = 53.4545;
   const rowHeightPx = 40;
@@ -265,24 +486,33 @@
   };
   const nameLeftPx = 120, nameWidthPx = 280;
   const teamLeftPx = 40, teamWidthPx = 66;
+  const nameStripWidthPx = 410; // dark strip covering team-badge + name columns in the extension area
 
   function px2pct(v, dim){ return v/dim*100; }
+
+  function positionField(el){
+    const h = totalHeightPx();
+    el.style.left   = px2pct(parseFloat(el.dataset.leftpx), NATURAL_W) + '%';
+    el.style.top    = px2pct(parseFloat(el.dataset.toppx), h) + '%';
+    el.style.width  = px2pct(parseFloat(el.dataset.widthpx), NATURAL_W) + '%';
+    el.style.height = px2pct(parseFloat(el.dataset.heightpx), h) + '%';
+  }
 
   function makeField(cls, leftPx, topPx, widthPx, heightPx, placeholder, basefont){
     const el = document.createElement('input');
     el.type = 'text';
     el.className = 'field ' + cls;
     el.placeholder = placeholder || '';
-    el.style.left = px2pct(leftPx, NATURAL_W) + '%';
-    el.style.top = px2pct(topPx, NATURAL_H) + '%';
-    el.style.width = px2pct(widthPx, NATURAL_W) + '%';
-    el.style.height = px2pct(heightPx, NATURAL_H) + '%';
+    el.dataset.leftpx = leftPx; el.dataset.toppx = topPx;
+    el.dataset.widthpx = widthPx; el.dataset.heightpx = heightPx;
     el.dataset.basefont = basefont;
+    positionField(el);
+    el.addEventListener('input', applyFontSizes);
     return el;
   }
 
-  for(let i=0;i<ROWS;i++){
-    const pos = i+1;
+  function createTeamRow(i){
+    const pos = i + 1;
     const topPx = rowTopPx + i*rowStepPx;
 
     const teamEl = makeField('team-field num', teamLeftPx, topPx, teamWidthPx, rowHeightPx, '', 20);
@@ -302,6 +532,78 @@
       statEl.dataset.pos = pos; statEl.dataset.field = f;
       stage.appendChild(statEl);
     });
+  }
+
+  function removeTeamRow(pos){
+    document.querySelectorAll('.field[data-pos="'+pos+'"]').forEach(el=>el.remove());
+  }
+
+  // Resizes the stage to fit all current rows: keeps the original artwork pixel-perfect at the
+  // top, and grows an extension panel below it for any teams added beyond the base 12.
+  function layoutStage(){
+    const h = totalHeightPx();
+    stage.style.aspectRatio = NATURAL_W + ' / ' + h;
+
+    const img = stage.querySelector('img');
+    img.style.height = px2pct(BASE_H, h) + '%';
+
+    let panel = document.getElementById('extraPanel');
+    if(extraTeamCount > 0){
+      if(!panel){
+        panel = document.createElement('div');
+        panel.id = 'extraPanel';
+        panel.className = 'extra-panel';
+        stage.insertBefore(panel, img.nextSibling);
+      }
+      panel.style.top = px2pct(BASE_H, h) + '%';
+      panel.style.height = px2pct(h - BASE_H, h) + '%';
+
+      panel.innerHTML = '';
+      const strip = document.createElement('div');
+      strip.className = 'extra-name-strip';
+      strip.style.width = px2pct(nameStripWidthPx, NATURAL_W) + '%';
+      panel.appendChild(strip);
+
+      for(let i=0;i<extraTeamCount;i++){
+        const band = document.createElement('div');
+        band.className = 'extra-row-bg';
+        band.style.top = px2pct(i*rowStepPx, h - BASE_H) + '%';
+        band.style.height = px2pct(rowStepPx, h - BASE_H) + '%';
+        panel.appendChild(band);
+      }
+    } else if(panel){
+      panel.remove();
+    }
+
+    document.querySelectorAll('.field').forEach(positionField);
+  }
+
+  for(let i=0;i<ROWS_BASE;i++){ createTeamRow(i); }
+  layoutStage();
+
+  // ---- Add / remove teams beyond the base 12 ----
+  function trkAddTeams(n){
+    n = Math.max(1, Math.min(24, parseInt(n,10) || 1));
+    const from = totalTeams();
+    extraTeamCount += n;
+    for(let i=from; i<totalTeams(); i++){ createTeamRow(i); }
+    layoutStage();
+    applyFontSizes();
+    if(typeof trkOnTeamCountChanged === 'function') trkOnTeamCountChanged();
+  }
+  function trkRemoveLastTeam(){
+    if(extraTeamCount <= 0) return;
+    const pos = totalTeams();
+    if(!confirm('حذف الفريق رقم ' + pos + '؟ راح تنحذف نتائجه من كل الجولات المحفوظة أيضًا.')) return;
+    removeTeamRow(pos);
+    extraTeamCount -= 1;
+    layoutStage();
+    if(typeof trkOnTeamRemoved === 'function') trkOnTeamRemoved(pos);
+  }
+  function trkResetTeamCount(){
+    for(let pos=totalTeams(); pos>ROWS_BASE; pos--){ removeTeamRow(pos); }
+    extraTeamCount = 0;
+    layoutStage();
   }
 
   // ---- Style controls ----
@@ -367,7 +669,6 @@
   }
 
   function clearAll(){
-    if(!confirm('متأكد إنك تبي تفرّغ كل الخانات؟')) return;
     document.querySelectorAll('.field').forEach(el=> el.value='');
     applyFontSizes();
   }
@@ -403,24 +704,31 @@
     const numbered = lines.map(l=>{
       const clean = toEnglishDigits(l);
       const m = clean.match(/^(\d{1,2})\s*[\.\)\-:،]?\s*(.*)$/);
-      if(m && m[1] && parseInt(m[1],10)>=1 && parseInt(m[1],10)<=ROWS && m[2]){
+      if(m && m[1] && parseInt(m[1],10)>=1 && parseInt(m[1],10)<=totalTeams() && m[2]){
         return {pos: parseInt(m[1],10), name: m[2].trim()};
       }
       return null;
     });
     const allNumbered = numbered.every(n => n !== null);
 
+    function setPos(pos, name){
+      if(typeof trkSetImportedName === 'function'){
+        trkSetImportedName(pos, name);
+        return;
+      }
+      const field = getNameField(pos);
+      if(field){ field.value = name; }
+    }
+
     if(allNumbered){
-      numbered.forEach(n=>{
-        const field = getNameField(n.pos);
-        if(field){ field.value = n.name; }
-      });
+      numbered.forEach(n=>{ setPos(n.pos, n.name); });
     } else {
-      lines.slice(0,ROWS).forEach((line, idx)=>{
-        const field = getNameField(idx+1);
-        if(field){ field.value = line; }
+      lines.slice(0,totalTeams()).forEach((line, idx)=>{
+        setPos(idx+1, line);
       });
     }
+
+    if(typeof trkRefreshAfterImport === 'function'){ trkRefreshAfterImport(); }
 
     applyFontSizes();
     closeImport();
@@ -435,11 +743,36 @@
 
   async function downloadImage(){
     const img = stage.querySelector('img');
+    const h = totalHeightPx();
     const canvas = document.createElement('canvas');
     canvas.width = NATURAL_W;
-    canvas.height = NATURAL_H;
+    canvas.height = h;
     const ctx = canvas.getContext('2d');
-    ctx.drawImage(img, 0, 0, NATURAL_W, NATURAL_H);
+    ctx.drawImage(img, 0, 0, NATURAL_W, BASE_H);
+
+    if(h > BASE_H){
+      // extension panel background: light stat area + dark name/team strip, matching on-screen look
+      ctx.fillStyle = '#f2eef8';
+      ctx.fillRect(0, BASE_H, NATURAL_W, h - BASE_H);
+
+      const grad = ctx.createLinearGradient(0, 0, nameStripWidthPx, 0);
+      grad.addColorStop(0, '#2a1338');
+      grad.addColorStop(1, '#1a0d24');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, BASE_H, nameStripWidthPx, h - BASE_H);
+      ctx.fillStyle = '#a852c9';
+      ctx.fillRect(nameStripWidthPx-2, BASE_H, 2, h - BASE_H);
+
+      ctx.strokeStyle = 'rgba(60,20,80,0.15)';
+      ctx.lineWidth = 1;
+      for(let i=0;i<extraTeamCount;i++){
+        const rowY = BASE_H + i*rowStepPx;
+        ctx.beginPath();
+        ctx.moveTo(0, rowY);
+        ctx.lineTo(NATURAL_W, rowY);
+        ctx.stroke();
+      }
+    }
 
     if(document.fonts && document.fonts.ready){ await document.fonts.ready; }
 
@@ -450,11 +783,11 @@
 
       if(isTeamField){
         const x = parseFloat(el.style.left)/100*NATURAL_W;
-        const y = parseFloat(el.style.top)/100*NATURAL_H;
+        const y = parseFloat(el.style.top)/100*h;
         const w = parseFloat(el.style.width)/100*NATURAL_W;
-        const h = parseFloat(el.style.height)/100*NATURAL_H;
+        const rowH = parseFloat(el.style.height)/100*h;
         ctx.fillStyle = '#ffffff';
-        ctx.fillRect(x, y, w, h);
+        ctx.fillRect(x, y, w, rowH);
       }
 
       if(!val) return;
@@ -471,9 +804,9 @@
       const color = isTeam ? '#141414' : (isStat ? statColor : nameColor);
 
       const x = parseFloat(el.style.left)/100*NATURAL_W;
-      const y = parseFloat(el.style.top)/100*NATURAL_H;
+      const y = parseFloat(el.style.top)/100*h;
       const w = parseFloat(el.style.width)/100*NATURAL_W;
-      const h = parseFloat(el.style.height)/100*NATURAL_H;
+      const rowH = parseFloat(el.style.height)/100*h;
 
       ctx.font = st.weight + ' ' + fontPx + 'px ' + st.family;
       ctx.fillStyle = color;
@@ -493,7 +826,7 @@
         ctx.textAlign = 'center';
         tx = x + w/2;
       }
-      const ty = y + h/2 + fontPx*0.03;
+      const ty = y + rowH/2 + fontPx*0.03;
       ctx.fillText(val, tx, ty);
       ctx.shadowBlur = 0;
     });
@@ -509,6 +842,524 @@
       URL.revokeObjectURL(url);
     }, 'image/png');
   }
+</script>
+
+<script>
+  // ================= Tournament Points Tracker (12 teams, single group) =================
+  let trkPointsTable = {1:10,2:6,3:5,4:4,5:3,6:2,7:1,8:1,9:1,10:1,11:1,12:1};
+  let trkTeamNames = Array.from({length: totalTeams()}, (_, i) => 'Team ' + (i + 1));
+  let trkRounds = []; // {number, entries: {teamId(1..12): {position, kills}}}
+
+  function trkEscapeHtml(s){
+    return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+  function trkEl(id){ return document.getElementById(id); }
+  function trkPts(pos){ return trkPointsTable[pos] || 0; }
+
+  // ---------------- Points table ----------------
+  function trkRenderPointsTable(){
+    const grid = trkEl('trkPointsGrid');
+    grid.innerHTML = '';
+    for(let pos=1; pos<=12; pos++){
+      const cell = document.createElement('div');
+      cell.className = 'trk-point-cell';
+      cell.innerHTML = '<label>المركز '+pos+'</label>';
+      const inp = document.createElement('input');
+      inp.type = 'number';
+      inp.min = '0';
+      inp.value = trkPointsTable[pos];
+      inp.addEventListener('input', ()=>{
+        const v = parseInt(inp.value, 10);
+        trkPointsTable[pos] = isNaN(v) ? 0 : v;
+        trkRenderStandings();
+        trkRenderRoundLog();
+        trkRenderQuickStats();
+        trkUpdateRoundEntryTotals();
+      });
+      cell.appendChild(inp);
+      grid.appendChild(cell);
+    }
+  }
+
+  // ---------------- Round entry ----------------
+  function trkRenderRoundEntryForm(){
+    const body = trkEl('trkRoundEntryBody');
+    body.innerHTML = '';
+    const nextNumEl = trkEl('trkNextRoundNum');
+    if(nextNumEl) nextNumEl.textContent = trkRounds.length + 1;
+
+    for(let i=0;i<totalTeams();i++){
+      const teamId = i + 1;
+      const tr = document.createElement('tr');
+      tr.dataset.teamId = teamId;
+
+      const nameTd = document.createElement('td');
+      nameTd.className = 'trk-name-cell';
+      const nameInput = document.createElement('input');
+      nameInput.type = 'text';
+      nameInput.className = 'trk-name-input';
+      nameInput.value = trkTeamNames[i];
+      nameInput.addEventListener('input', ()=>{
+        trkTeamNames[i] = nameInput.value.trim() || ('Team ' + teamId);
+        trkRenderStandings();
+        trkRenderRoundLog();
+        trkRenderQuickStats();
+      });
+      nameTd.appendChild(nameInput);
+      tr.appendChild(nameTd);
+
+      const posTd = document.createElement('td');
+      const posSelect = document.createElement('select');
+      posSelect.className = 'trk-pos-select';
+      posSelect.innerHTML = '<option value="">—</option>' +
+        Array.from({length:totalTeams()}, (_,k)=>k+1).map(p=>'<option value="'+p+'">'+p+'</option>').join('');
+      posSelect.addEventListener('change', ()=>{
+        trkUpdateRoundEntryTotals();
+        trkUpdatePositionAvailability();
+      });
+      posTd.appendChild(posSelect);
+      tr.appendChild(posTd);
+
+      const killsTd = document.createElement('td');
+      const killsInput = document.createElement('input');
+      killsInput.type = 'number';
+      killsInput.min = '0';
+      killsInput.value = '0';
+      killsInput.className = 'trk-kills-input';
+      killsInput.addEventListener('input', trkUpdateRoundEntryTotals);
+      killsTd.appendChild(killsInput);
+      tr.appendChild(killsTd);
+
+      const posPtsTd = document.createElement('td');
+      posPtsTd.className = 'trk-row-pos-pts num';
+      posPtsTd.textContent = '—';
+      tr.appendChild(posPtsTd);
+
+      const totalTd = document.createElement('td');
+      totalTd.className = 'trk-row-total num';
+      totalTd.textContent = '—';
+      tr.appendChild(totalTd);
+
+      body.appendChild(tr);
+    }
+    trkUpdateRoundEntryTotals();
+    trkUpdatePositionAvailability();
+  }
+
+  function trkUpdateRoundEntryTotals(){
+    document.querySelectorAll('#trkRoundEntryBody tr').forEach(tr=>{
+      const posSelect = tr.querySelector('.trk-pos-select');
+      const killsInput = tr.querySelector('.trk-kills-input');
+      const posPtsCell = tr.querySelector('.trk-row-pos-pts');
+      const totalCell = tr.querySelector('.trk-row-total');
+      if(!posSelect) return;
+      const pos = posSelect.value;
+      const kills = parseInt(killsInput.value, 10) || 0;
+      const pts = pos ? trkPts(pos) : 0;
+      posPtsCell.textContent = pos ? pts : '—';
+      totalCell.textContent = pos ? (pts + kills) : '—';
+    });
+  }
+
+  // Once a position is picked for a team, it disappears from every other team's list for this
+  // round, so it can't be handed out twice.
+  function trkUpdatePositionAvailability(){
+    const selects = Array.from(document.querySelectorAll('#trkRoundEntryBody .trk-pos-select'));
+    const takenBy = {};
+    selects.forEach(sel=>{ if(sel.value) takenBy[sel.value] = sel; });
+
+    selects.forEach(sel=>{
+      Array.from(sel.options).forEach(opt=>{
+        if(opt.value === '') return;
+        const holder = takenBy[opt.value];
+        const takenByOther = holder && holder !== sel;
+        opt.disabled = !!takenByOther;
+        opt.textContent = takenByOther ? (opt.value + ' — محجوز') : opt.value;
+      });
+    });
+  }
+
+  let trkEditingRoundNumber = null; // null = adding a new round; otherwise editing that round number
+
+  function trkClearCurrentRound(){
+    trkEl('trkRoundErr').classList.remove('show');
+    document.querySelectorAll('#trkRoundEntryBody tr').forEach(tr=>{
+      const posSelect = tr.querySelector('.trk-pos-select');
+      const killsInput = tr.querySelector('.trk-kills-input');
+      if(posSelect) posSelect.value = '';
+      if(killsInput) killsInput.value = '0';
+    });
+    trkUpdateRoundEntryTotals();
+    trkUpdatePositionAvailability();
+  }
+
+  function trkSaveRound(){
+    const errBox = trkEl('trkRoundErr');
+    errBox.classList.remove('show');
+    errBox.textContent = '';
+
+    const rows = document.querySelectorAll('#trkRoundEntryBody tr');
+    const entries = {};
+    const usedPositions = new Map();
+
+    let anyFilled = false;
+    let valid = true;
+
+    rows.forEach(tr=>{
+      const teamId = parseInt(tr.dataset.teamId, 10);
+      const posSelect = tr.querySelector('.trk-pos-select');
+      const killsInput = tr.querySelector('.trk-kills-input');
+      if(!posSelect) return;
+      const posVal = posSelect.value;
+      const kills = parseInt(killsInput.value, 10) || 0;
+
+      if(posVal === '') return;
+      anyFilled = true;
+      const pos = parseInt(posVal, 10);
+
+      if(usedPositions.has(pos)){
+        errBox.textContent = 'خطأ: المركز ' + pos + ' مكرر بين "' + usedPositions.get(pos) + '" و فريق آخر.';
+        errBox.classList.add('show');
+        valid = false;
+        return;
+      }
+      usedPositions.set(pos, trkTeamNames[teamId-1]);
+      entries[teamId] = { position: pos, kills };
+    });
+
+    if(!valid) return;
+    if(!anyFilled){
+      errBox.textContent = 'حدد مركز لفريق واحد على الأقل قبل احتساب الجولة.';
+      errBox.classList.add('show');
+      return;
+    }
+
+    if(trkEditingRoundNumber !== null){
+      // update points/kills for an existing round in place — everything downstream (standings,
+      // WWCD counts, all later rounds' cumulative totals) recomputes automatically since the
+      // whole tracker is always derived fresh from trkRounds.
+      const r = trkRounds.find(rr => rr.number === trkEditingRoundNumber);
+      if(r) r.entries = entries;
+      trkEditingRoundNumber = null;
+    } else {
+      trkRounds.push({ number: trkRounds.length + 1, entries });
+    }
+
+    trkExitEditMode();
+    trkClearCurrentRound();
+    trkRenderRoundEntryForm();
+    trkRenderStandings();
+    trkRenderRoundLog();
+    trkRenderQuickStats();
+  }
+
+  // Loads a previously-saved round back into the round-entry form so its numbers can be
+  // changed. Saving afterward overwrites that same round instead of creating a new one.
+  function trkEditRound(roundNumber){
+    const r = trkRounds.find(rr => rr.number === roundNumber);
+    if(!r) return;
+
+    trkEditingRoundNumber = roundNumber;
+    trkRenderRoundEntryForm();
+
+    document.querySelectorAll('#trkRoundEntryBody tr').forEach(tr=>{
+      const teamId = parseInt(tr.dataset.teamId, 10);
+      const e = r.entries[teamId];
+      if(!e) return;
+      const posSelect = tr.querySelector('.trk-pos-select');
+      const killsInput = tr.querySelector('.trk-kills-input');
+      if(posSelect) posSelect.value = String(e.position);
+      if(killsInput) killsInput.value = e.kills;
+    });
+    trkUpdateRoundEntryTotals();
+    trkUpdatePositionAvailability();
+
+    trkEl('trkRoundModeLabel').innerHTML = '✏️ تعديل الجولة رقم <span class="num">' + roundNumber + '</span>';
+    trkEl('trkSaveRoundBtn').textContent = '💾 حفظ التعديل';
+    trkEl('trkCancelEditBtn').style.display = '';
+
+    const panel = trkEl('trkRoundEntryTable');
+    if(panel) panel.closest('.trk-panel').scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  function trkCancelEditRound(){
+    trkEditingRoundNumber = null;
+    trkExitEditMode();
+    trkClearCurrentRound();
+    trkRenderRoundEntryForm();
+  }
+
+  function trkExitEditMode(){
+    trkEl('trkRoundModeLabel').innerHTML = 'الجولة رقم <span id="trkNextRoundNum" class="num">' + (trkRounds.length+1) + '</span>';
+    trkEl('trkSaveRoundBtn').textContent = '✅ احتساب وإضافة الجولة';
+    trkEl('trkCancelEditBtn').style.display = 'none';
+  }
+
+  function trkDeleteRound(roundNumber){
+    if(!confirm('حذف الجولة رقم ' + roundNumber + ' نهائيًا؟ الترتيب العام يتحدث تلقائيًا بعدها.')) return;
+    trkRounds = trkRounds.filter(r => r.number !== roundNumber);
+    trkRounds.forEach((r,i)=> r.number = i+1); // keep round numbers contiguous
+    if(trkEditingRoundNumber === roundNumber){
+      trkEditingRoundNumber = null;
+      trkExitEditMode();
+      trkClearCurrentRound();
+    }
+    trkRenderRoundEntryForm();
+    trkRenderStandings();
+    trkRenderRoundLog();
+    trkRenderQuickStats();
+  }
+
+  // ---------------- Standings computation ----------------
+  function trkComputeStandings(){
+    const map = {};
+    for(let i=0;i<totalTeams();i++){
+      const teamId = i+1;
+      map[teamId] = {
+        id: teamId, totalPoints: 0, wwcd: 0, totalKills: 0,
+        positionPointsOnly: 0, matches: 0, positionSum: 0
+      };
+    }
+
+    trkRounds.forEach(r=>{
+      Object.keys(r.entries).forEach(teamIdStr=>{
+        const teamId = parseInt(teamIdStr, 10);
+        const s = map[teamId];
+        if(!s) return;
+        const e = r.entries[teamId];
+        const pts = trkPts(e.position);
+        s.totalPoints += pts + (e.kills || 0);
+        s.positionPointsOnly += pts;
+        s.totalKills += (e.kills || 0);
+        s.matches += 1;
+        s.positionSum += e.position;
+        if(e.position === 1) s.wwcd += 1;
+      });
+    });
+
+    const list = Object.values(map).map(s => ({ ...s, name: trkTeamNames[s.id-1] }));
+    list.sort((a,b)=>{
+      if(b.totalPoints !== a.totalPoints) return b.totalPoints - a.totalPoints;
+      if(b.wwcd !== a.wwcd) return b.wwcd - a.wwcd;
+      if(b.totalKills !== a.totalKills) return b.totalKills - a.totalKills;
+      return b.positionPointsOnly - a.positionPointsOnly;
+    });
+    return list;
+  }
+
+  function trkRenderStandings(){
+    const body = trkEl('trkStandingsBody');
+    const list = trkComputeStandings();
+    trkEl('trkRoundsCountTag').textContent = 'عدد الجولات: ' + trkRounds.length;
+    body.innerHTML = '';
+
+    list.forEach((s, idx)=>{
+      const tr = document.createElement('tr');
+      const rank = idx + 1;
+      if(rank<=3) tr.className = 'trk-rank-' + rank;
+      const avg = s.matches ? (s.positionSum/s.matches).toFixed(2) : '—';
+      tr.innerHTML =
+        '<td class="trk-rank-cell num">'+rank+'</td>' +
+        '<td class="trk-name-cell">'+trkEscapeHtml(s.name)+'</td>' +
+        '<td class="num">'+s.positionPointsOnly+'</td>' +
+        '<td class="num">'+s.totalKills+'</td>' +
+        '<td class="trk-pts-cell num">'+s.totalPoints+'</td>' +
+        '<td class="num">'+s.wwcd+'</td>' +
+        '<td class="num">'+avg+'</td>';
+      body.appendChild(tr);
+    });
+
+    trkSyncImageFromStandings(list);
+  }
+
+  // ---------------- Round log (flat table) ----------------
+  function trkRenderRoundLog(){
+    const body = trkEl('trkLogBody');
+    trkEl('trkLogCountTag').textContent = trkRounds.length + ' جولة';
+
+    if(trkRounds.length === 0){
+      body.innerHTML = '<div class="trk-empty" style="color:#6b5a76; padding:12px;">ما فيه جولات محفوظة بعد.</div>';
+      return;
+    }
+    body.innerHTML = '';
+    for(let i = trkRounds.length - 1; i >= 0; i--){
+      const r = trkRounds[i];
+      const entryList = Object.keys(r.entries).map(tid=>{
+        const teamId = parseInt(tid, 10);
+        const e = r.entries[tid];
+        return { name: trkTeamNames[teamId-1], position: e.position, kills: e.kills };
+      }).sort((a,b)=>a.position-b.position);
+
+      const winner = entryList.find(e => e.position === 1);
+
+      const card = document.createElement('div');
+      card.className = 'trk-round-card';
+
+      const head = document.createElement('div');
+      head.className = 'trk-round-card-head';
+      head.innerHTML =
+        '<span class="trk-round-card-title">الجولة ' + r.number + '</span>' +
+        (winner ? '<span class="trk-round-card-winner">🏆 ' + trkEscapeHtml(winner.name) + '</span>' : '') +
+        '<span class="trk-round-card-actions">' +
+          '<button class="btn secondary small" onclick="trkEditRound(' + r.number + ')">✏️ تعديل</button>' +
+          '<button class="btn secondary small" onclick="trkDeleteRound(' + r.number + ')">🗑 حذف</button>' +
+        '</span>';
+      card.appendChild(head);
+
+      const table = document.createElement('table');
+      table.className = 'trk-table';
+      table.innerHTML = '<thead><tr><th style="text-align:right;">الفريق</th><th>المركز</th><th>الكيلات</th><th>نقاط المركز</th><th>مجموع الجولة</th></tr></thead>';
+      const tbody = document.createElement('tbody');
+      entryList.forEach(e=>{
+        const pts = trkPts(e.position);
+        const tr = document.createElement('tr');
+        tr.innerHTML =
+          '<td class="trk-name-cell">'+trkEscapeHtml(e.name)+'</td>' +
+          '<td class="num">'+e.position+'</td>' +
+          '<td class="num">'+e.kills+'</td>' +
+          '<td class="num">'+pts+'</td>' +
+          '<td class="num">'+(pts+e.kills)+'</td>';
+        tbody.appendChild(tr);
+      });
+      table.appendChild(tbody);
+      card.appendChild(table);
+
+      body.appendChild(card);
+    }
+  }
+
+  // ---------------- Quick stats ----------------
+  function trkRenderQuickStats(){
+    const list = trkComputeStandings().filter(s=>s.matches>0);
+
+    const topFraggerEl = trkEl('trkStatTopFragger');
+    const topFraggerSub = trkEl('trkStatTopFraggerSub');
+    const bestAvgEl = trkEl('trkStatBestAvg');
+    const bestAvgSub = trkEl('trkStatBestAvgSub');
+    const mostWwcdEl = trkEl('trkStatMostWwcd');
+    const mostWwcdSub = trkEl('trkStatMostWwcdSub');
+    const leaderEl = trkEl('trkStatLeader');
+    const leaderSub = trkEl('trkStatLeaderSub');
+
+    if(list.length === 0){
+      [topFraggerEl,bestAvgEl,mostWwcdEl,leaderEl].forEach(el=>el.textContent='—');
+      [topFraggerSub,bestAvgSub,mostWwcdSub,leaderSub].forEach(el=>el.textContent='');
+      return;
+    }
+
+    const topFragger = [...list].sort((a,b)=>b.totalKills-a.totalKills)[0];
+    topFraggerEl.textContent = topFragger.name;
+    topFraggerSub.textContent = topFragger.totalKills + ' كيل';
+
+    const bestAvg = [...list].sort((a,b)=>(a.positionSum/a.matches)-(b.positionSum/b.matches))[0];
+    bestAvgEl.textContent = bestAvg.name;
+    bestAvgSub.textContent = 'متوسط المركز ' + (bestAvg.positionSum/bestAvg.matches).toFixed(2);
+
+    const mostWwcd = [...list].sort((a,b)=>b.wwcd-a.wwcd)[0];
+    mostWwcdEl.textContent = mostWwcd.name;
+    mostWwcdSub.textContent = mostWwcd.wwcd + ' مرة';
+
+    const leader = trkComputeStandings()[0];
+    leaderEl.textContent = leader.name;
+    leaderSub.textContent = leader.totalPoints + ' نقطة إجمالية';
+  }
+
+  // ---------------- Auto-fill the exportable scoreboard image from the tracker ----------------
+  // MP = matches played, WIN = WWCD, POS = placement points, KILLS = kills, TOTAL = total
+  // points. The badge in the leftmost column (team-field, 01-12) is left untouched — it's just
+  // the row index, which already lines up with the ranked row the name is written into.
+  function trkGetStatField(pos, key){
+    return document.querySelector('.stat-field[data-pos="'+pos+'"][data-field="'+key+'"]');
+  }
+  function trkSyncImageFromStandings(list){
+    if(typeof getNameField !== 'function') return;
+    const standings = list || trkComputeStandings();
+    standings.forEach((s, idx)=>{
+      const pos = idx + 1; // 1-12, in rank order
+      const nameField = getNameField(pos);
+      if(nameField){
+        nameField.value = s.name;
+        nameField.readOnly = true; nameField.classList.add('trk-auto-field');
+      }
+      ['mp','win','pos','kills','total'].forEach(key=>{
+        const f = trkGetStatField(pos, key);
+        if(!f) return;
+        f.readOnly = true; f.classList.add('trk-auto-field');
+      });
+      const mp = trkGetStatField(pos, 'mp'); if(mp) mp.value = s.matches;
+      const win = trkGetStatField(pos, 'win'); if(win) win.value = s.wwcd;
+      const posF = trkGetStatField(pos, 'pos'); if(posF) posF.value = s.positionPointsOnly;
+      const kills = trkGetStatField(pos, 'kills'); if(kills) kills.value = s.totalKills;
+      const total = trkGetStatField(pos, 'total'); if(total) total.value = s.totalPoints;
+    });
+    if(typeof applyFontSizes === 'function') applyFontSizes();
+  }
+
+  // ---------------- Reset everything ----------------
+  function trkResetAll(){
+    trkPointsTable = {1:10,2:6,3:5,4:4,5:3,6:2,7:1,8:1,9:1,10:1,11:1,12:1};
+    trkTeamNames = Array.from({length: totalTeams()}, (_, i) => 'Team ' + (i + 1));
+    trkRounds = [];
+    trkRenderPointsTable();
+    trkRenderRoundEntryForm();
+    trkRenderStandings();
+    trkRenderRoundLog();
+    trkRenderQuickStats();
+    trkEl('trkTeamCountTag').textContent = totalTeams() + ' فريق';
+  }
+
+  function resetEverything(){
+    if(!confirm('تصفير كل شيء؟ راح يتصفر جدول الصورة وكل بيانات الجولات والترتيب، وترجع الفرق الزايدة تنحذف.')) return;
+    if(typeof trkResetTeamCount === 'function') trkResetTeamCount();
+    clearAll();
+    trkResetAll();
+  }
+
+  // Called by trkAddTeams() (image script) right after new rows are created.
+  function trkOnTeamCountChanged(){
+    while(trkTeamNames.length < totalTeams()){
+      trkTeamNames.push('Team ' + (trkTeamNames.length + 1));
+    }
+    trkRenderRoundEntryForm();
+    trkRenderStandings();
+    trkRenderRoundLog();
+    trkRenderQuickStats();
+    trkEl('trkTeamCountTag').textContent = totalTeams() + ' فريق';
+  }
+
+  // Called by trkRemoveLastTeam() (image script) after the row/fields for `pos` are removed.
+  function trkOnTeamRemoved(pos){
+    trkTeamNames = trkTeamNames.slice(0, totalTeams());
+    trkRounds.forEach(r=>{ delete r.entries[pos]; });
+    trkRenderRoundEntryForm();
+    trkRenderStandings();
+    trkRenderRoundLog();
+    trkRenderQuickStats();
+    trkEl('trkTeamCountTag').textContent = totalTeams() + ' فريق';
+  }
+
+  function trkSetImportedName(pos, name){
+    if(pos>=1 && pos<=totalTeams()){
+      trkTeamNames[pos-1] = name || ('Team ' + pos);
+    }
+  }
+  function trkRefreshAfterImport(){
+    trkRenderRoundEntryForm();
+    trkRenderStandings();
+    trkRenderRoundLog();
+    trkRenderQuickStats();
+  }
+
+  function trkRenderAll(){
+    trkRenderRoundEntryForm();
+    trkRenderStandings();
+    trkRenderRoundLog();
+    trkRenderQuickStats();
+    trkEl('trkTeamCountTag').textContent = totalTeams() + ' فريق';
+  }
+
+  trkRenderPointsTable();
+  trkRenderAll();
 </script>
 </body>
 </html>
